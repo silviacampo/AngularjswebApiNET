@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="agendaApp">
+<head>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap/3.3.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/app.css">
+ 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script src="Scripts/controller.js"></script>
+<script src="Scripts/services.js"></script>
+</head>
+<body>
+
+<p>{{"hello" + " you"}}</p>
+<ul  ng-controller="EventListCtrl">
+    <li ng-repeat="phone in phones">
+      <span>{{phone.name}}</span>
+      <p>{{phone.snippet}}</p>
+    </li>
+  </ul>
+</body>
+</html>
