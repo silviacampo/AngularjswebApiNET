@@ -10,10 +10,38 @@
 <script src="Scripts/controller.js"></script>
 <script src="Scripts/services.js"></script>
 </head>
-<body>
+<body>1111
+<div ng-app="" ng-controller="customersController"> 
+1
+<table>2
+  <tr ng-repeat="x in names">3
+    <td>{{ x.email == null }}</td>4
+    <td>{{ x.password }}</td>5
+</table>
+6
+</div>
 
+<script>
+    app.run(function ($http) {
+        //delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    });
+
+    function customersController($scope, $http) {        
+        $http.get("http://localhost:8086/api/Users").
+        error(function (data, status, headers, config) { alert(data.toString() + status.toString()); })
+  .success(function (response) { alert(1); $scope.names = response; });
+    }
+</script>
+7
 <p>{{"hello" + " you"}}</p>
-<ul  ng-controller="EventListCtrl">
+<ol  ng-controller="EventListCtrl">
+    <li ng-repeat="phone in phones">
+      <span>{{phone.name}}</span>
+      <p>{{phone.snippet}}</p>
+    </li>
+  </ol>
+  1111
+  <ul  ng-controller="EventListCtrl">
     <li ng-repeat="phone in phones">
       <span>{{phone.name}}</span>
       <p>{{phone.snippet}}</p>

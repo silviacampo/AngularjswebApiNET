@@ -1,4 +1,4 @@
-var app = angular.module('agendaApp',[]);
+var app = angular.module('agendaApp', ['agendaServices']);
 
 app.controller('EventListCtrl', function ($scope) {
   $scope.phones = [
