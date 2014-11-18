@@ -8,6 +8,10 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+@{
+Response.AppendHeader("Access-Control-Allow-Origin", "*");
+//Response.AppendHeader("Content-type", "application/json");
+}
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")

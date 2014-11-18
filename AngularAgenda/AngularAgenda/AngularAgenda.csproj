@@ -77,6 +77,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="app.js" />
     <Content Include="index.html" />
+    <Content Include="Sample.html" />
     <Content Include="Scripts\controller.js" />
     <Content Include="Scripts\services.js" />
     <Content Include="Styles\Site.css" />
@@ -85,6 +86,9 @@
     <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.1.js" />
     <Content Include="Scripts\jquery-1.4.1.min.js" />
+    <Content Include="usersController.js" />
+    <Content Include="Users_Form.htm" />
+    <Content Include="Users_List.htm" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -160,6 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="users.json" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

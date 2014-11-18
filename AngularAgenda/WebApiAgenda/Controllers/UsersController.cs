@@ -29,6 +29,7 @@ namespace WebApiAgenda.Controllers
             //    connection.Open();
             //    command.ExecuteNonQuery();
             //}
+            HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return db.users.AsEnumerable();
         }
 
@@ -40,13 +41,14 @@ namespace WebApiAgenda.Controllers
             {
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotFound));
             }
-
+            HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             return user;
         }
 
         // PUT api/Users/5
         public HttpResponseMessage Putuser(int id, user user)
         {
+            HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             if (ModelState.IsValid && id == user.id)
             {
                 //db.Entry(user).State = EntityState.Modified;
@@ -71,6 +73,7 @@ namespace WebApiAgenda.Controllers
         // POST api/Users
         public HttpResponseMessage Postuser(user user)
         {
+            HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             if (ModelState.IsValid)
             {
                 db.users.AddObject(user);
@@ -78,6 +81,7 @@ namespace WebApiAgenda.Controllers
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, user);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = user.id }));
+                HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                 return response;
             }
             else
@@ -89,6 +93,7 @@ namespace WebApiAgenda.Controllers
         // DELETE api/Users/5
         public HttpResponseMessage Deleteuser(int id)
         {
+            HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             user user = db.users.First(c=>c.id == id);
             if (user == null)
             {

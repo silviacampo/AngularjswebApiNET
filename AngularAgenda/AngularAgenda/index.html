@@ -10,29 +10,81 @@
 <script src="Scripts/controller.js"></script>
 <script src="Scripts/services.js"></script>
 </head>
-<body>1111
+<body>
 <div ng-app="" ng-controller="customersController"> 
-1
-<table>2
-  <tr ng-repeat="x in names">3
-    <td>{{ x.email == null }}</td>4
-    <td>{{ x.password }}</td>5
+
+<table>
+  <tr ng-repeat="x in names | orderBy : 'id'">
+  <td>{{ x.id }}</td>
+  <td>{{ x.username | uppercase }}</td>
+    <td><a ng-disabled='x.id > 4' href='mailto:{{ x.email }}'>{{ x.email }}</a></td>
+    <td><span ng-show='x.id < 10'>{{ x.password }}</span></td>
 </table>
-6
+
 </div>
 
 <script>
-    app.run(function ($http) {
+    //angular.run(function ($http) {
         //delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    });
+    //});
 
-    function customersController($scope, $http) {        
+    function customersController($scope, $http) {
         $http.get("http://localhost:8086/api/Users").
         error(function (data, status, headers, config) { alert(data.toString() + status.toString()); })
-  .success(function (response) { alert(1); $scope.names = response; });
+  .success(function (response) {
+     // alert(1); 
+  $scope.names = response; });
     }
 </script>
-7
+
+<div ng-app="app2" ng-controller="personController">
+
+<button ng-click="toggle()">Toggle</button>
+
+<p ng-hide="myVar">
+First Name: <input type="text" ng-model="firstName"><br>
+Last Name: <input type="text" ng-model="lastName"><br>
+<br>
+Full Name: {{firstName + " " + lastName}}
+</p>
+
+</div>
+
+<script>
+    var app = angular.module("app2", []);
+    app.controller("myCtrl", function ($scope) {
+        $scope.firstName = "John";
+        $scope.lastName = "Doe";
+    });
+    function personController($scope, $http) {
+        $http.get("http://localhost:8086/api/Users/5").
+        error(function (data, status, headers, config) { alert(data.toString() + status.toString()); })
+  .success(function (response) {
+      // alert(1); 
+      $scope.names = response;
+  });
+  $scope.firstName = "a"//$scope.names[username];
+  $scope.lastName = "b"//$scope.names[0].email;
+        $scope.myVar = false;
+        $scope.toggle = function () {
+            $scope.myVar = !$scope.myVar;
+        };
+    }
+</script>
+
+<style>
+table, th , td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+</style>
 <p>{{"hello" + " you"}}</p>
 <ol  ng-controller="EventListCtrl">
     <li ng-repeat="phone in phones">
@@ -47,5 +99,42 @@
       <p>{{phone.snippet}}</p>
     </li>
   </ul>
+
+  <h2>Validation Example</h2>
+
+<form  ng-app=""  ng-controller="validateCtrl"
+name="myForm" novalidate>
+
+<p>Username:<br>
+  <input type="text" name="user" ng-model="user" required>
+  <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+  <span ng-show="myForm.user.$error.required">Username is required.</span>
+  </span>
+</p>
+
+<p>Email:<br>
+  <input type="email" name="email" ng-model="email" required>
+  <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+  <span ng-show="myForm.email.$error.required">Email is required.</span>
+  <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+  </span>
+</p>
+
+<p>
+  <input type="submit"
+  ng-disabled="myForm.user.$dirty && myForm.user.$invalid ||
+  myForm.email.$dirty && myForm.email.$invalid">
+</p>
+
+</form>
+
+<script>
+    function validateCtrl($scope) {
+        $scope.user = 'John Doe';
+        $scope.email = 'john.doe@gmail.com';
+    }
+</script>
+
+
 </body>
 </html>
