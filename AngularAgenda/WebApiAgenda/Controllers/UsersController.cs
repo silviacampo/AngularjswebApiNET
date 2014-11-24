@@ -46,31 +46,36 @@ namespace WebApiAgenda.Controllers
         }
 
         // PUT api/Users/5
+        //[Route("")]
         public HttpResponseMessage Putuser(int id, user user)
         {
             HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             if (ModelState.IsValid && id == user.id)
             {
                 //db.Entry(user).State = EntityState.Modified;
-
+                db.users.Attach(user);
+                db.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
                 try
                 {
                     db.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
+                    //HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                     return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
-
+                //HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             else
             {
+                //HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
 
         // POST api/Users
+        //[Route("")]
         public HttpResponseMessage Postuser(user user)
         {
             HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
@@ -81,7 +86,7 @@ namespace WebApiAgenda.Controllers
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, user);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = user.id }));
-                HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+                //HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                 return response;
             }
             else
