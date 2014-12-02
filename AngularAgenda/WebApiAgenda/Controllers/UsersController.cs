@@ -46,13 +46,11 @@ namespace WebApiAgenda.Controllers
         }
 
         // PUT api/Users/5
-        //[Route("")]
         public HttpResponseMessage Putuser(int id, user user)
         {
             HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
             if (ModelState.IsValid && id == user.id)
             {
-                //db.Entry(user).State = EntityState.Modified;
                 db.users.Attach(user);
                 db.ObjectStateManager.ChangeObjectState(user, EntityState.Modified);
                 try
@@ -61,24 +59,21 @@ namespace WebApiAgenda.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    //HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                     return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
-                //HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             else
             {
-                //HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
 
         // POST api/Users
-        //[Route("")]
         public HttpResponseMessage Postuser(user user)
         {
             HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+
             if (ModelState.IsValid)
             {
                 db.users.AddObject(user);
@@ -86,7 +81,7 @@ namespace WebApiAgenda.Controllers
 
                 HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, user);
                 response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = user.id }));
-                //HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+
                 return response;
             }
             else
@@ -99,6 +94,8 @@ namespace WebApiAgenda.Controllers
         public HttpResponseMessage Deleteuser(int id)
         {
             HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Origin", "*");
+            HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+            HttpContext.Current.Response.AppendHeader("Access-Control-Allow-Headers", "Content-Type");
             user user = db.users.First(c=>c.id == id);
             if (user == null)
             {
@@ -117,6 +114,17 @@ namespace WebApiAgenda.Controllers
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, user);
+        }
+
+        // OPTIONS api/Users/5
+        public HttpResponseMessage Optionsuser(int id)
+        {            
+            HttpContext.Current.Response.AppendHeader("access-control-allow-origin", "*");
+            HttpContext.Current.Response.AppendHeader("access-control-allow-methods", "GET, POST, PUT, DELETE, OPTIONS");
+            HttpContext.Current.Response.AppendHeader("access-control-allow-headers", "content-type, accept");
+            HttpContext.Current.Response.AppendHeader("access-control-max-age", "10");
+            HttpContext.Current.Response.AppendHeader("content-length", "0"); 
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)
