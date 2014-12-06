@@ -127,6 +127,17 @@ namespace WebApiAgenda.Controllers
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
+        // OPTIONS api/Users
+        public HttpResponseMessage Optionsuser()
+        {
+            HttpContext.Current.Response.AppendHeader("access-control-allow-origin", "*");
+            HttpContext.Current.Response.AppendHeader("access-control-allow-methods", "GET, POST, PUT, DELETE, OPTIONS");
+            HttpContext.Current.Response.AppendHeader("access-control-allow-headers", "content-type, accept");
+            HttpContext.Current.Response.AppendHeader("access-control-max-age", "10");
+            HttpContext.Current.Response.AppendHeader("content-length", "0");
+            return Request.CreateResponse(HttpStatusCode.NoContent);
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
