@@ -5,13 +5,19 @@
     <th>Username</th>
     <th>Email</th>
     <th>&nbsp;</th>
+    <th>&nbsp;</th>
   </tr></thead>
   <tbody><tr ng-repeat="user in users">
     <td>{{ user.username }}</td>
     <td>{{ user.email }}</td>
     <td>
-      <button class="btn" ng-click="editUser(user.id)">
+      <button class="btn" ng-click="editUser($index)">
       <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+      </button>
+    </td>
+        <td>
+      <button class="btn" ng-click="deleteUser(user.id)">
+      <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Delete
       </button>
     </td>
   </tr></tbody>
